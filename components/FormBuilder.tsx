@@ -15,6 +15,7 @@ import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
 import Link from 'next/link';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
+import DeleteFormBtn from './DeleteFormBtn';
 
 
 
@@ -115,8 +116,9 @@ const FormBuilder = ({form} : {form: Form}) => {
         <PreviewDialogBtn /> 
         {!form.published && (
           <>
-       <SaveFormBtn id={form.id} />
+            <SaveFormBtn id={form.id} />
             <PublishFormBtn id={form.id} /> 
+            <DeleteFormBtn id={form.id} />
           </>
         )}
       </div>

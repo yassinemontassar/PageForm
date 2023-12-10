@@ -17,6 +17,7 @@ import { Form } from '@prisma/client';
 
 export default function Home() {
   return (
+    
    <div className='container pt-4'>
       <Suspense fallback={<StatsCards loading={true} />}>
         <CardStatsWrapper />
