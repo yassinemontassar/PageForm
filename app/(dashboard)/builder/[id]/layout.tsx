@@ -24,7 +24,9 @@ function Layout({ children }: { children: ReactNode }) {
   return (
     <div className={`flex w-full flex-grow mx-auto ${isMobile ? 'mobile-message' : ''}`}>
       {isMobile ? (
-        <p>You cant access this page on a mobile device.</p>
+        <p className="text-center text-lg text-red-500 animate-pulse">
+        You cant access this page on a mobile device.
+      </p>
       ) : (
         children
       )}
