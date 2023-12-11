@@ -1,3 +1,4 @@
+
 import { GetFormById, GetFormWithSubmissions } from '@/actions/form';
 import FormBuilder from '@/components/FormBuilder';
 import FormLinkShare from '@/components/FormLinkShare';
@@ -13,6 +14,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { format, formatDistance } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button';
+import ConvertToPDFButton from '@/components/PDFbutton';
 
 async function FormDetailPage ({
   params,
@@ -115,11 +118,12 @@ async function SubmissionsTable({ id }: { id: number }) {
   formElements.forEach((element) => {
     switch (element.type) {
       case "TextField":
-      case "NumberField":
-      case "TextAreaField":
-      case "DateField":
-      case "SelectField":
-      case "CheckboxField":
+        case "NumberField":
+        case "TextAreaField":
+        case "DateField":
+        case "SelectField":
+        case "CheckboxField":
+        
         columns.push({
           id: element.id,
           label: element.extraAttributes?.label,
@@ -133,6 +137,7 @@ async function SubmissionsTable({ id }: { id: number }) {
   });
 
   const rows: Row[] = [];
+
   form.FormSubmissions.forEach((submission) => {
     const content = JSON.parse(submission.content);
     rows.push({
@@ -141,8 +146,13 @@ async function SubmissionsTable({ id }: { id: number }) {
     });
   });
 
+  const columnLabels: string[] = columns.map((column) => column.label); // Create an array of column labels
+  const mappedData = rows.map((row) => columns.map((column) => row[column.id]));
+  console.log("------------")
+  console.log(columnLabels,": ", mappedData);
   
   return(
+   
     <>
     <h1 className="text-2xl font-bold my-4">Submissions</h1>
     <div className="rounded-md border">
@@ -168,11 +178,14 @@ async function SubmissionsTable({ id }: { id: number }) {
                     addSuffix: true,
                   })}
                 </TableCell>
+                <TableCell className="text-muted-foreground text-right">
+            </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
     </div>
+    <ConvertToPDFButton row={mappedData} columnLabels={columnLabels} />
     </>
   );
 }
