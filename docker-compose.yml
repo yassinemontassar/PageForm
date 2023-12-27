@@ -1,0 +1,10 @@
+version: '3.9' 
+
+services:
+  nextapp:
+    container_name: nextapp-pageform
+    image: pageform/nextapp-pageform:v1.0
+    build: . 
+    ports:
+      - "3005:3005"
+      
